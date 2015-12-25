@@ -6,8 +6,8 @@ clc
 [xS, feS] = audioread('speech1.wav');
 [xM, feM] = audioread('music1.wav');
 
-soundsc(xS, feS);
-soundsc(xM, feM);
+%soundsc(xS, feS);
+%soundsc(xM, feM);
 
 N = 2.^(nextpow2(length(xS))); %xs et xm ont la même longueur
 
@@ -83,14 +83,12 @@ figure,
 subplot 211, plot(SCSpeech), title('Centroid Speech signal')
 subplot 212, plot(SCMusic), title('Centroid Music signal')
 
-varxS_sc = var(SCSpeech);
-varxM_sc = var(SCMusic);
+SRPSpeech = SRP(xS);
+SRPMusic = SRP(xM);
 
-mean(SCSpeech) 
-
-xS_toutDesc = [varxS_ZCR; varxS_energie; varxS_sc];
-
-
+figure,
+subplot 211, plot(SRPSpeech), title('SRP Speech signal')
+subplot 212, plot(SRPMusic), title('SRP Music signal')
 
 
 
