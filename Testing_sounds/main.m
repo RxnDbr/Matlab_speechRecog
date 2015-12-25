@@ -29,13 +29,13 @@ freq = linspace(-feS/2, feS/2-feS/N, N);
 
 figure, 
 subplot 211, plot(freq, fftshift(abs(fft_xS))), ...
-    title ('Speech signal'), xlabel('Freq(Hz)'), ylabel('FFT')
+    title ('fftshift Speech signal'), xlabel('Freq(Hz)'), ylabel('FFT')
 subplot 212, plot (freq, fftshift(abs(fft_xM))), ...
-    title ('Music analysis'), xlabel('Freq(Hz'), ylabel('FFT')
+    title ('fftshift Music signal'), xlabel('Freq(Hz'), ylabel('FFT')
 
 figure, 
-subplot 211, spectrogram(xS, hanning(256), 0, 1024, feS, 'yaxis'), title('speech')
-subplot 212, spectrogram(xM, hanning(256) , 0, 1024, feM, 'yaxis'), title ('music')
+subplot 211, spectrogram(xS, hanning(256), 0, 1024, feS, 'yaxis'), title('spectrogram Speech')
+subplot 212, spectrogram(xM, hanning(256) , 0, 1024, feM, 'yaxis'), title ('spectrogram Music')
 
 %%découpage en trame
 trame_matS = frame_func(xS, M, M_rec);
@@ -48,8 +48,8 @@ zcr1xs = zcr(xS, feS);
 zcr1xm = zcr(xM, feM);
 
 figure, 
-subplot 211, plot(zcr1xs)
-subplot 212, plot(zcr1xm)
+subplot 211, plot(zcr1xs), title('ZCR Speech')
+subplot 212, plot(zcr1xm), title('ZCR Music')
 
 varxS_ZCR = var(zcr1xs);
 varxM_ZCR = var(zcr1xm);
@@ -69,8 +69,8 @@ nbTrameFaibleNRJS = energie_fun(xS,feS);
 nbTrameFaibleNRJM = energie_fun(xM,feM);
 
 figure,
-subplot 211, plot(nbTrameFaibleNRJS), title('Speech signal')
-subplot 212, plot(nbTrameFaibleNRJM), title('Music signal')
+subplot 211, plot(nbTrameFaibleNRJS), title('Faible E Speech signal')
+subplot 212, plot(nbTrameFaibleNRJM), title('Faible E Music signal')
 
 varxS_energie = var(nbTrameFaibleNRJS);
 varxM_energie = var(nbTrameFaibleNRJM);
@@ -80,8 +80,8 @@ SCSpeech = centroid(xS, feS);
 SCMusic = centroid(xM, feM);
 
 figure,
-subplot 211, plot(SCSpeech), title('Speech signal')
-subplot 212, plot(SCMusic), title('Music signal')
+subplot 211, plot(SCSpeech), title('Centroid Speech signal')
+subplot 212, plot(SCMusic), title('Centroid Music signal')
 
 varxS_sc = var(SCSpeech);
 varxM_sc = var(SCMusic);
