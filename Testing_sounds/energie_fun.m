@@ -1,18 +1,15 @@
 
 %calcul energie signal
-function comparer = energie_fun(x, fe)
+function comparer = energie_fun(x, fe, M, R)
 nbSec = floor(length(x)/fe);
-M = 256;
-M_rec = M-1;
-
 
 for i=1:nbSec-1
-    a=pow_fun(x(i*fe:(i+1)*fe));
-    frame_mat = frame_func(x(i*fe:(i+1)*fe), M, M_rec);
+    totalNRJ=pow_fun(x(i*fe:(i+1)*fe)); 
+    frame_mat = frame_func(x(i*fe:(i+1)*fe), M, R);
     comparer(i) = 0;
     for j=1:length(frame_mat(:,1))
-        b=pow_fun(frame_mat(j,:));
-        if (b<0.5*a)
+        trameNRJ=pow_fun(frame_mat(j,:));
+        if (trameNRJ<0.5*totalNRJ)
             comparer(i) = comparer(i) + 1;
         end
     end

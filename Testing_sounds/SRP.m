@@ -8,7 +8,7 @@ function SRP = SRP(sig)
         value=0;
         K=0;
        
-        for i=1:(L/2)-1
+        for i=1:(L/2)-1 % ne prend que les fréquences positives sur la trame
             ref = ref + spectre(i)^2;
         end
        
