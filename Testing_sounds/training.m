@@ -36,3 +36,67 @@ clc
 [x_music15, fe_music15] = audioread('./Testing_sounds/music_testing15.wav');
 [x_music16, fe_music16] = audioread('./Testing_sounds/music_testing16.wav');
 
+L = 256;
+R = L-15;
+
+Dspeech = zeros(16,4);
+Dspeech(1,:) = transpose(getDesc(x_speech1, fe_speech1, L, R));
+Dspeech(2,:) = transpose(getDesc(x_speech2, fe_speech2, L, R));
+Dspeech(3,:) = transpose(getDesc(x_speech3, fe_speech3, L, R));
+Dspeech(4,:) = transpose(getDesc(x_speech4, fe_speech4, L, R));
+Dspeech(5,:) = transpose(getDesc(x_speech5, fe_speech5, L, R));
+Dspeech(6,:) = transpose(getDesc(x_speech6, fe_speech6, L, R));
+Dspeech(7,:) = transpose(getDesc(x_speech7, fe_speech7, L, R));
+Dspeech(8,:) = transpose(getDesc(x_speech8, fe_speech8, L, R));
+Dspeech(9,:) = transpose(getDesc(x_speech9, fe_speech9, L, R));
+Dspeech(10,:) = transpose(getDesc(x_speech10, fe_speech10, L, R));
+Dspeech(11,:) = transpose(getDesc(x_speech11, fe_speech11, L, R));
+Dspeech(12,:) = transpose(getDesc(x_speech12, fe_speech12, L, R));
+Dspeech(13,:) = transpose(getDesc(x_speech13, fe_speech13, L, R));
+Dspeech(14,:) = transpose(getDesc(x_speech14, fe_speech14, L, R));
+Dspeech(15,:) = transpose(getDesc(x_speech15, fe_speech15, L, R));
+Dspeech(16,:) = transpose(getDesc(x_speech16, fe_speech16, L, R));
+
+Dmusic = zeros(16,4);
+Dmusic(1,:) = transpose(getDesc(x_music1, fe_music1, L, R));
+Dmusic(2,:) = transpose(getDesc(x_music2, fe_music2, L, R));
+Dmusic(3,:) = transpose(getDesc(x_music3, fe_music3, L, R));
+Dmusic(4,:) = transpose(getDesc(x_music4, fe_music4, L, R));
+Dmusic(5,:) = transpose(getDesc(x_music5, fe_music5, L, R));
+Dmusic(6,:) = transpose(getDesc(x_music6, fe_music6, L, R));
+Dmusic(7,:) = transpose(getDesc(x_music7, fe_music7, L, R));
+Dmusic(8,:) = transpose(getDesc(x_music8, fe_music8, L, R));
+Dmusic(9,:) = transpose(getDesc(x_music9, fe_music9, L, R));
+Dmusic(10,:) = transpose(getDesc(x_music10, fe_music10, L, R));
+Dmusic(11,:) = transpose(getDesc(x_music11, fe_music11, L, R));
+Dmusic(12,:) = transpose(getDesc(x_music12, fe_music12, L, R));
+Dmusic(13,:) = transpose(getDesc(x_music13, fe_music13, L, R));
+Dmusic(14,:) = transpose(getDesc(x_music14, fe_music14, L, R));
+Dmusic(15,:) = transpose(getDesc(x_music15, fe_music15, L, R));
+Dmusic(16,:) = transpose(getDesc(x_music16, fe_music16, L, R));
+
+
+m1 = moyenneDescripteur(Dspeech);
+m2 = moyenneDescripteur(Dmusic);
+
+s1 = 0;
+for i=1:length(Dspeech)
+    s1 = s1 + ((Dspeech(i,:)-m1)*transpose(Dspeech(i,:)-m1));
+end
+
+s2 = 0;
+for i=1:length(Dmusic)
+    s2 = s2 + ((Dspeech(i,:)-m2)*transpose(Dspeech(i,:)-m2));
+end
+
+Sb = (m1-m2)*transpose(m1-m2);
+Sw = s1+s2;
+
+w=(1/Sw)*(m1-m2);
+
+Y = transpose(w);
+
+figure,
+plot(Y(1), Y(2))
+
+save('desc.mat', 'm1', 'm2');

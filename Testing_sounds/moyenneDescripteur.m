@@ -1,6 +1,7 @@
-function moyDesc = moyenneDescripteur(groupeSignaux) %ex : ZCR
+function moyDesc = moyenneDescripteur(ensemble) 
     moyDesc = [];
-    for j=1:length(descripteur(1,:))
-        moyDesc(j) = (sum(descripteur(:,j)))/(length(descripteur(:,j)));
+    for j=1:length(ensemble(1,:))
+        moyDesc(j) = (sum(ensemble(:,j)))/(length(ensemble(:,j)));
     end
 end
+

@@ -8,6 +8,10 @@ function SC = centroid(sig, fe)
         numerateur = numerateur + freq * spectre(i);
         denominateur = denominateur + spectre(i);      
     end
-    SC = numerateur/denominateur;
+    if denominateur == 0
+      SC = 0;
+    else
+        SC = numerateur/denominateur;
+    end
         
   
