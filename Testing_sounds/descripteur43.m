@@ -35,8 +35,8 @@ subplot 212, plot(zcr1xm), title('ZCR Music')
 varxS_ZCR = var(zcr1xs);
 varxM_ZCR = var(zcr1xm);
 
-nbTrameFaibleNRJS = energie_fun(xS,feS, N, L, R);
-nbTrameFaibleNRJM = energie_fun(xM,feM, N, L, R);
+nbTrameFaibleNRJS = energie_fun(xS,feS, L, R);
+nbTrameFaibleNRJM = energie_fun(xM,feM, L, R);
 
 figure,
 subplot 211, plot(nbTrameFaibleNRJS), title('Faible E Speech signal')

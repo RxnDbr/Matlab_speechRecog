@@ -75,28 +75,21 @@ Dmusic(14,:) = transpose(getDesc(x_music14, fe_music14, L, R));
 Dmusic(15,:) = transpose(getDesc(x_music15, fe_music15, L, R));
 Dmusic(16,:) = transpose(getDesc(x_music16, fe_music16, L, R));
 
-
-m1 = moyenneDescripteur(Dspeech);
-m2 = moyenneDescripteur(Dmusic);
-
-s1 = 0;
-for i=1:length(Dspeech)
-    s1 = s1 + ((Dspeech(i,:)-m1)*transpose(Dspeech(i,:)-m1));
+tempS = Dmusic;
+for i=1 : length(tempS(1,:))
+    DmusicNorm(:,i) = (tempS(:,i) - mean(tempS(:,i)))/std(tempS(:,i));
 end
 
-s2 = 0;
-for i=1:length(Dmusic)
-    s2 = s2 + ((Dspeech(i,:)-m2)*transpose(Dspeech(i,:)-m2));
+tempM = Dspeech;
+for i=1 : length(tempS(1,:))
+    DspeechNorm(:,i) = (tempM(:,i) - mean(tempM(:,i)))/std(tempM(:,i));
 end
+%m1 = moyenneDescripteur(Dspeech);
+%m2 = moyenneDescripteur(Dmusic);
 
-Sb = (m1-m2)*transpose(m1-m2);
-Sw = s1+s2;
 
-w=(1/Sw)*(m1-m2);
-
-Y = transpose(w);
-
-figure,
-plot(Y(1), Y(2))
-
-save('desc.mat', 'm1', 'm2');
+figure, plot(DspeechNorm(:,1), DspeechNorm(:,3), 'bx');
+hold on 
+plot(DmusicNorm(:,1), DmusicNorm(:,3), 'rx');
+hold off
+save('desc.mat', 'DmusicNorm', 'DspeechNorm');

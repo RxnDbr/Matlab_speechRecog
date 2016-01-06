@@ -6,7 +6,8 @@ function desc = getDesc(sig, fe, L, R)
         centroid_val(i) = centroid(trame_mat(i, :), fe);
         SRP_val(i) = SRP(trame_mat(i, :));        
     end
-    desc = [var(zcr_val); 
+    desc = [
+        var(zcr_val); 
         var(energie_val); 
         var(centroid_val);
         var(SRP_val)];
