@@ -1,8 +1,8 @@
-clear all;
+clear;
 close all;
 clc
 
-[x_speech1, fe_speech1] = audioread('./Testing_sounds/speech_testing1.wav');
+[x_speech1, fe_speech1] = audioread('../Testing_sounds/speech_testing1.wav');
 [x_speech2, fe_speech2] = audioread('./Testing_sounds/speech_testing2.wav');
 [x_speech3, fe_speech3] = audioread('./Testing_sounds/speech_testing3.wav');
 [x_speech4, fe_speech4] = audioread('./Testing_sounds/speech_testing4.wav');
@@ -38,6 +38,7 @@ clc
 
 L = 256;
 R = L-15;
+
 
 Dspeech = zeros(16,4);
 Dspeech(1,:) = transpose(getDesc(x_speech1, fe_speech1, L, R));
@@ -77,19 +78,14 @@ Dmusic(16,:) = transpose(getDesc(x_music16, fe_music16, L, R));
 
 tempS = Dmusic;
 for i=1 : length(tempS(1,:))
-    DmusicNorm(:,i) = (tempS(:,i) - mean(tempS(:,i)))/std(tempS(:,i));
+    DmusicNorm(:,i) =(tempS(:,i) - mean(Dmusic(:,i)))/std(Dmusic(:,i));
 end
 
 tempM = Dspeech;
 for i=1 : length(tempS(1,:))
-    DspeechNorm(:,i) = (tempM(:,i) - mean(tempM(:,i)))/std(tempM(:,i));
+    DspeechNorm(:,i) = (tempM(:,i) - mean(Dspeech(:,i)))/std(Dspeech(:,i));
 end
-%m1 = moyenneDescripteur(Dspeech);
-%m2 = moyenneDescripteur(Dmusic);
 
 
-figure, plot(DspeechNorm(:,1), DspeechNorm(:,3), 'bx');
-hold on 
-plot(DmusicNorm(:,1), DmusicNorm(:,3), 'rx');
-hold off
+
 save('desc.mat', 'DmusicNorm', 'DspeechNorm');

@@ -1,22 +1,61 @@
-load('desc.mat');
-figure,
-plot(m1(1), m1(4), 'rx'); 
+close all; clear ; clc
 
-s1 = 0;
-for i=1:length(Dspeech)
-    s1 = s1 + ((Dspeech(i,:)-m1)*transpose(Dspeech(i,:)-m1));
+load('desc2.mat');
+
+
+m1 = transpose(moyenneDescripteur(DspeechNorm));
+m2 = transpose(moyenneDescripteur(DmusicNorm));
+
+s1 = zeros(length(m1(:,1)), length(m1(:,1)));
+s2 = zeros(length(m2(:,1)), length(m2(:,1)));
+
+for i = 1:length(DspeechNorm(:,1))
+    temp1 = s1;
+    s1 = temp1 + transpose(DspeechNorm(i,:)-transpose(m1))*(DspeechNorm(i,:)-transpose(m1));    
 end
 
-s2 = 0;
-for i=1:length(Dmusic)
-    s2 = s2 + ((Dspeech(i,:)-m2)*transpose(Dspeech(i,:)-m2));
+for i = 1:length(DmusicNorm(:,1))
+    temp2 = s2;
+    s2 = temp2 + transpose(DmusicNorm(i,:)-transpose(m2))*(DmusicNorm(i,:)-transpose(m2));
 end
 
 Sb = (m1-m2)*transpose(m1-m2);
 Sw = s1+s2;
 
-w=(1/Sw)*(m1-m2);
+w= inv(Sw)*(m1-m2);
 
-Y = transpose(w);
+%Y = transpose(w); * transpose(cat(1, DspeechNorm, DmusicNorm));
 
+figure, plot(DspeechNorm(:,1), DspeechNorm(:,3), 'bx');
+hold on 
+plot(DmusicNorm(:,1), DmusicNorm(:,3), 'rx');
+plot(m1(1,1), m1(3,1), 'bo');
+plot(m2(1,1), m2(3,1), 'ro');
+%a = cat(1, DspeechNorm, DmusicNorm);
+%fplot('transpose(cat(1,Y(1),Y(3)))*transpose(cat(1, cat(2,DspeechNorm(:,1), DspeechNorm(:,3)), cat(2,DmusicNorm(:,1),DmusicNorm(:,3))))', [0 100])
+hold off
+
+    for i=1:4
+        for j=1:4
+            figure,plot(DspeechNorm(:,i), DspeechNorm(:,j), 'bx');
+            hold on 
+            plot(DmusicNorm(:,i), DmusicNorm(:,j), 'rx');
+            plot(m1(i,1), m1(j,1), 'bo');
+            plot(m2(i,1), m2(j,1), 'ro');
+            %x = cat(1, cat(2,DspeechNorm(:,1), DspeechNorm(:,3)), cat(2,DmusicNorm(:,1),DmusicNorm(:,3)));
+            y = cat(2, w(i,:), w(j,:));
+            plot(w(1), w(3));
+            hold off;
+        end
+    end
+
+    figure,plot(DspeechNorm(:,1), DspeechNorm(:,3), 'bx'), xlabel('ZCR'), ylabel('centroid');
+    hold on 
+    plot(DmusicNorm(:,1), DmusicNorm(:,3), 'rx');
+    plot(m1(1,1), m1(3,1), 'bo');
+    plot(m2(1,1), m2(3,1), 'ro');
+    %x = cat(1, cat(2,DspeechNorm(:,1), DspeechNorm(:,3)), cat(2,DmusicNorm(:,1),DmusicNorm(:,3)));
+    %y = cat(2, w(i,:), w(j,:));
+    plot(w(1), w(3));
+    hold off;
 
