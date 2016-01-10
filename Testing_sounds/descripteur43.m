@@ -29,8 +29,8 @@ for i=1:length(trame_matM(:,1))
 end
 
 figure, 
-subplot 211, plot(zcr1xs), title('ZCR Speech')
-subplot 212, plot(zcr1xm), title('ZCR Music')
+subplot 211, plot(zcr1xs), title('ZCR Speech signal')
+subplot 212, plot(zcr1xm), title('ZCR Music signal')
 
 varxS_ZCR = var(zcr1xs);
 varxM_ZCR = var(zcr1xm);
@@ -71,6 +71,7 @@ end
 figure,
 subplot 211, plot(SRPSpeech), title('SRP Speech signal')
 subplot 212, plot(SRPMusic), title('SRP Music signal')
+
 
 varxS_SRP = var(SRPSpeech);
 varxM_SRP = var(SRPMusic);
